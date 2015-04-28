@@ -3,7 +3,7 @@ package com.analytictech
 import java.io.InputStream
 import java.util.concurrent.{BlockingQueue, DelayQueue}
 
-import com.analytictech.workflow.{Connector, TaskTimeout, Workflow}
+import com.analytictech.workflow.{TaskTimeout, Workflow}
 import org.json4s._
 import org.json4s.jackson.JsonMethods._
 import sext._
@@ -12,7 +12,6 @@ import sext._
 object Application {
 
   def main(args: Array[String]) {
-
     implicit val formats = DefaultFormats
 
     val expiryQueue: BlockingQueue[TaskTimeout] = new DelayQueue()
@@ -25,9 +24,5 @@ object Application {
 
     println(dag.treeString)
     println("done")
-  }
-
-  def JSONtoEdge(jsPath: String): Connector = {
-    new Connector("from", "to")
   }
 }
