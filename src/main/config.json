@@ -1,0 +1,42 @@
+{
+  "nodes": [
+    {
+      "label": "Init",
+      "task": "StartFlow",
+      "params": "list of my parameters"
+    },
+    {
+      "label": "MarketDataCaching",
+      "task": "CacheMarketData",
+      "params": "curve=LIBOR"
+    },
+    {
+      "label": "TradeCaching",
+      "task": "CacheTrades",
+      "params": "type=BONDS"
+    },
+    {
+      "label": "Calculation",
+      "task": "calculate",
+      "params": ""
+    }
+  ],
+  "edges": [
+    {
+      "from": "Init",
+      "to": "MarketDataCaching"
+    },
+    {
+      "from": "Init",
+      "to": "TradeCaching"
+    },
+    {
+      "from": "MarketDataCaching",
+      "to": "Calculation"
+    },
+    {
+      "from": "TradeCaching",
+      "to": "Calculation"
+    }
+  ]
+}
