@@ -1,56 +1,55 @@
-package com.analytictech
+package com.analytictech.workflow
 
 import java.io.Serializable
 import java.util
 
 
-
-case class Node(label: String, payload: Option[Task]) extends Cloneable with Serializable {
-
-
-  private val children: util.List[Node] = new util.ArrayList[Node]
-  private val parents: util.List[Node] = new util.ArrayList[Node]
+case class Step(label: String, payload: Option[Task]) extends Cloneable with Serializable {
 
 
-  def addEdgeTo(node: Node) {
-    this.children.add(node)
+  private val children: util.List[Step] = new util.ArrayList[Step]
+  private val parents: util.List[Step] = new util.ArrayList[Step]
+
+
+  def addConnectorTo(step: Step) {
+    this.children.add(step)
   }
 
-  def removeEdgeTo(node: Node) {
-    this.children.remove(node)
+  def removeConnectorTo(step: Step) {
+    this.children.remove(step)
   }
 
-  def addEdgeFrom(node: Node) {
-    this.parents.add(node)
+  def addConnectorFrom(step: Step) {
+    this.parents.add(step)
   }
 
-  def removeEdgeFrom(node: Node) {
-    this.parents.remove(node)
+  def removeConnectorFrom(step: Step) {
+    this.parents.remove(step)
   }
 
-  def getChildren: util.List[Node] = {
+  def getChildren: util.List[Step] = {
     this.children
   }
 
   def getChildLabels: util.List[String] = {
     val retValue = new util.ArrayList[String](this.children.size)
-    val i$: util.Iterator[Node] = this.children.iterator
+    val i$: util.Iterator[Step] = this.children.iterator
     while (i$.hasNext) {
-      val node: Node = i$.next
+      val step: Step = i$.next
       retValue.add(label)
     }
     retValue
   }
 
-  def getParents: util.List[Node] = {
+  def getParents: util.List[Step] = {
     this.parents
   }
 
   def getParentLabels: util.List[String] = {
     val retValue = new util.ArrayList[String](this.parents.size)
-    val i$: util.Iterator[Node] = this.parents.iterator
+    val i$: util.Iterator[Step] = this.parents.iterator
     while (i$.hasNext) {
-      val node: Node = i$.next
+      val step: Step = i$.next
       retValue.add(label)
     }
     retValue
@@ -75,6 +74,6 @@ case class Node(label: String, payload: Option[Task]) extends Cloneable with Ser
   }
 
   override def toString: String = {
-    "Node{label=\'" + this.label + "\'" + "}"
+    "Step{label=\'" + this.label + "\'" + "}"
   }
 }

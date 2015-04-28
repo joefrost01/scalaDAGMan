@@ -1,5 +1,6 @@
 {
-  "nodes": [
+  "name": "workflow1",
+  "steps": [
     {
       "label": "Init",
       "task": "StartFlow",
@@ -21,7 +22,7 @@
       "params": ""
     }
   ],
-  "edges": [
+  "connectors": [
     {
       "from": "Init",
       "to": "MarketDataCaching"

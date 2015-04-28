@@ -1,7 +1,6 @@
-package com.analytictech
+package com.analytictech.workflow
 
-import java.util.concurrent.Delayed
-import java.util.concurrent.TimeUnit
+import java.util.concurrent.{Delayed, TimeUnit}
 
 class TaskTimeout(data: String, delay: Long) extends Delayed {
 
