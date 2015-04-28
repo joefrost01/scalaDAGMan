@@ -1,25 +1,51 @@
 {
   "name": "workflow1",
+  "resumable": true,
+  "priority": 1,
   "steps": [
     {
       "label": "Init",
-      "task": "StartFlow",
-      "params": "list of my parameters"
+      "task": {
+        "command": "command1",
+        "parameters": [
+          "param1",
+          "param2",
+          "param3"
+        ]
+      }
     },
     {
       "label": "MarketDataCaching",
-      "task": "CacheMarketData",
-      "params": "curve=LIBOR"
+      "task": {
+        "command": "command1",
+        "parameters": [
+          "param1",
+          "param2",
+          "param3"
+        ]
+      }
     },
     {
       "label": "TradeCaching",
-      "task": "CacheTrades",
-      "params": "type=BONDS"
+      "task": {
+        "command": "command1",
+        "parameters": [
+          "param1",
+          "param2",
+          "param3"
+        ]
+      }
     },
     {
       "label": "Calculation",
-      "task": "calculate",
-      "params": ""
+      "task": {
+        "command": "command1",
+        "parameters": [
+          "param1",
+          "param2",
+          "param3"
+        ]
+      }
     }
   ],
   "connectors": [

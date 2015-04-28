@@ -4,7 +4,7 @@ import java.io.Serializable
 import java.util
 
 
-case class Step(label: String, payload: Option[Task]) extends Cloneable with Serializable {
+case class Step(label: String, task: Task) extends Cloneable with Serializable {
 
 
   private val children: util.List[Step] = new util.ArrayList[Step]
@@ -73,7 +73,4 @@ case class Step(label: String, payload: Option[Task]) extends Cloneable with Ser
     retValue
   }
 
-  override def toString: String = {
-    "Step{label=\'" + this.label + "\'" + "}"
-  }
 }

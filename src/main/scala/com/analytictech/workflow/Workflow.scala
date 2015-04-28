@@ -6,7 +6,7 @@ import java.util
 import scala.collection.mutable.ListBuffer
 
 
-case class Workflow(name: String, steps: List[Step], connectors: List[Connector]) extends Cloneable with Serializable {
+case class Workflow(name: String, resumable: Boolean, priority: Int, steps: List[Step], connectors: List[Connector]) extends Cloneable with Serializable {
   val stepMap = new util.HashMap[String, Step]
   val stepListInner = new ListBuffer[Step]
 

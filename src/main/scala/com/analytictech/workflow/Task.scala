@@ -1,8 +1,6 @@
 package com.analytictech.workflow
 
 
-case class Task(label: String) {
-
-
+case class Task(command: String, parameters: List[String]) {
 
 }
