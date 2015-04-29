@@ -26,7 +26,7 @@ case class Workflow(name: String, resumable: Boolean=false, priority: Int=1, ste
   def addStep(step: Step): Step = {
     var retValue: Step = null
     if (this.stepMap.containsKey(step.label)) {
-      retValue = this.stepMap.get(step.label)
+      retValue = stepMap.get(step.label)
     }
     else {
       retValue = step
@@ -61,8 +61,8 @@ case class Workflow(name: String, resumable: Boolean=false, priority: Int=1, ste
   }
 
   def removeConnector(from: String, to: String) {
-    val v1: Step = this.addStep(stepMap.get(from))
-    val v2: Step = this.addStep(stepMap.get(from))
+    val v1: Step = addStep(stepMap.get(from))
+    val v2: Step = addStep(stepMap.get(from))
     this.removeConnector(v1, v2)
   }
 
@@ -72,24 +72,24 @@ case class Workflow(name: String, resumable: Boolean=false, priority: Int=1, ste
   }
 
   def getStep(label: String): Step = {
-    val retValue = this.stepMap.get(label)
+    val retValue = stepMap.get(label)
     retValue
   }
 
   def hasConnector(label1: String, label2: String): Boolean = {
-    val v1 = this.getStep(label1)
-    val v2 = this.getStep(label2)
+    val v1 = getStep(label1)
+    val v2 = getStep(label2)
     val retValue: Boolean = v1.getChildren.contains(v2)
     retValue
   }
 
   def getChildLabels(label: String): util.List[String] = {
-    val step = this.getStep(label)
+    val step = getStep(label)
     step.getChildLabels
   }
 
   def getParentLabels(label: String): util.List[String] = {
-    val step = this.getStep(label)
+    val step = getStep(label)
     step.getParentLabels
   }
 
@@ -106,7 +106,7 @@ case class Workflow(name: String, resumable: Boolean=false, priority: Int=1, ste
   }
 
   def getSuccessorLabels(label: String): util.List[String] = {
-    val step: Step = this.getStep(label)
+    val step: Step = getStep(label)
     var retValue: util.List[String] = new util.ArrayList[String]
     if (step.isLeaf) {
       retValue = new util.ArrayList[String](1)

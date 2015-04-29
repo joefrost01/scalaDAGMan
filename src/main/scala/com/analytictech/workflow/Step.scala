@@ -2,6 +2,7 @@ package com.analytictech.workflow
 
 import java.io.Serializable
 import java.util
+import scala.collection.JavaConversions._
 
 
 case class Step(label: String, task: Task) extends Cloneable with Serializable {
@@ -12,7 +13,9 @@ case class Step(label: String, task: Task) extends Cloneable with Serializable {
 
 
   def addConnectorTo(step: Step) {
-    this.children.add(step)
+    if (!children.contains(step)) {
+      children.add(step)
+    }
   }
 
   def removeConnectorTo(step: Step) {
@@ -20,7 +23,9 @@ case class Step(label: String, task: Task) extends Cloneable with Serializable {
   }
 
   def addConnectorFrom(step: Step) {
-    this.parents.add(step)
+    if(!parents.contains(step)) {
+      this.parents.add(step)
+    }
   }
 
   def removeConnectorFrom(step: Step) {
@@ -32,12 +37,8 @@ case class Step(label: String, task: Task) extends Cloneable with Serializable {
   }
 
   def getChildLabels: util.List[String] = {
-    val retValue = new util.ArrayList[String](this.children.size)
-    val i$: util.Iterator[Step] = this.children.iterator
-    while (i$.hasNext) {
-      val step: Step = i$.next
-      retValue.add(label)
-    }
+    val retValue = new util.ArrayList[String](children.size)
+    for (child: Step <- children.toList) retValue.add(child.label)
     retValue
   }
 
@@ -46,12 +47,8 @@ case class Step(label: String, task: Task) extends Cloneable with Serializable {
   }
 
   def getParentLabels: util.List[String] = {
-    val retValue = new util.ArrayList[String](this.parents.size)
-    val i$: util.Iterator[Step] = this.parents.iterator
-    while (i$.hasNext) {
-      val step: Step = i$.next
-      retValue.add(label)
-    }
+    val retValue = new util.ArrayList[String](parents.size)
+    for (parent: Step <- parents.toList) retValue.add(parent.label)
     retValue
   }
 
