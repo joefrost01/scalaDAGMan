@@ -7,8 +7,9 @@ import scala.collection.JavaConversions._
 
 case class Step(label: String, task: Task) extends Cloneable with Serializable {
 
-
+  //TODO convert to Scala List - mutable
   private val children: util.List[Step] = new util.ArrayList[Step]
+  //TODO convert to Scala List - mutable
   private val parents: util.List[Step] = new util.ArrayList[Step]
 
 
@@ -32,20 +33,24 @@ case class Step(label: String, task: Task) extends Cloneable with Serializable {
     this.parents.remove(step)
   }
 
+  //TODO convert to Scala List
   def getChildren: util.List[Step] = {
     this.children
   }
 
+  //TODO convert to Scala List
   def getChildLabels: util.List[String] = {
     val retValue = new util.ArrayList[String](children.size)
     for (child: Step <- children.toList) retValue.add(child.label)
     retValue
   }
 
+  //TODO convert to Scala List
   def getParents: util.List[Step] = {
     this.parents
   }
 
+  //TODO convert to Scala List
   def getParentLabels: util.List[String] = {
     val retValue = new util.ArrayList[String](parents.size)
     for (parent: Step <- parents.toList) retValue.add(parent.label)
