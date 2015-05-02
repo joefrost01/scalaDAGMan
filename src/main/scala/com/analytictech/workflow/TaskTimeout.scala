@@ -12,10 +12,10 @@ class TaskTimeout(data: String, delay: Long) extends Delayed {
   }
 
   def compareTo(o: Delayed): Int = {
-    if (this.startTime < o.asInstanceOf[TaskTimeout].startTime) {
+    if (startTime < o.asInstanceOf[TaskTimeout].startTime) {
       return -1
     }
-    if (this.startTime > o.asInstanceOf[TaskTimeout].startTime) {
+    if (startTime > o.asInstanceOf[TaskTimeout].startTime) {
       return 1
     }
     0

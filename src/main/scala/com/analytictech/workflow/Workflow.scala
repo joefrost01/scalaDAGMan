@@ -6,7 +6,14 @@ import java.util
 import scala.collection.mutable.ListBuffer
 
 
-case class Workflow(name: String, resumable: Boolean=false, priority: Int=1, steps: List[Step], connectors: List[Connector]) extends Cloneable with Serializable {
+case class Workflow(name: String,
+                    resumable: Boolean = false,
+                    priority: Int = 1,
+                    steps: List[Step],
+                    connectors: List[Connector]
+                     ) extends Cloneable with Serializable {
+
+
   val stepMap = new util.HashMap[String, Step]
   val stepListInner = new ListBuffer[Step]
 
@@ -16,11 +23,11 @@ case class Workflow(name: String, resumable: Boolean=false, priority: Int=1, ste
 
 
   def getLabels: util.Set[String] = {
-    this.stepMap.keySet
+    stepMap.keySet
   }
 
   def getSteps: ListBuffer[Step] = {
-    this.stepListInner
+    stepListInner
   }
 
   def addStep(step: Step): Step = {
@@ -38,9 +45,9 @@ case class Workflow(name: String, resumable: Boolean=false, priority: Int=1, ste
 
   @throws(classOf[CycleDetectedException])
   def addConnector(from: String, to: String) {
-    val v1: Step = addStep(stepMap.get(from))
-    val v2: Step = addStep(stepMap.get(to))
-    this.addConnector(v1, v2)
+    val v1 = addStep(stepMap.get(from))
+    val v2 = addStep(stepMap.get(to))
+    addConnector(v1, v2)
   }
 
   @throws(classOf[CycleDetectedException])
@@ -54,7 +61,7 @@ case class Workflow(name: String, resumable: Boolean=false, priority: Int=1, ste
     to.addConnectorFrom(from)
     val cycle = CycleDetector.introducesCycle(to)
     if (cycle != null) {
-      this.removeConnector(from, to)
+      removeConnector(from, to)
       val msg: String = "Connector between \'" + from + "\' and \'" + to + "\' introduces to cycle in the workflow"
       throw new CycleDetectedException(msg, cycle)
     }
@@ -63,7 +70,7 @@ case class Workflow(name: String, resumable: Boolean=false, priority: Int=1, ste
   def removeConnector(from: String, to: String) {
     val v1: Step = addStep(stepMap.get(from))
     val v2: Step = addStep(stepMap.get(from))
-    this.removeConnector(v1, v2)
+    removeConnector(v1, v2)
   }
 
   def removeConnector(from: Step, to: Step) {
@@ -72,15 +79,13 @@ case class Workflow(name: String, resumable: Boolean=false, priority: Int=1, ste
   }
 
   def getStep(label: String): Step = {
-    val retValue = stepMap.get(label)
-    retValue
+    stepMap.get(label)
   }
 
   def hasConnector(label1: String, label2: String): Boolean = {
     val v1 = getStep(label1)
     val v2 = getStep(label2)
-    val retValue: Boolean = v1.getChildren.contains(v2)
-    retValue
+    v1.getChildren.contains(v2)
   }
 
   def getChildLabels(label: String): util.List[String] = {
@@ -95,18 +100,17 @@ case class Workflow(name: String, resumable: Boolean=false, priority: Int=1, ste
 
   @throws(classOf[CloneNotSupportedException])
   override def clone: AnyRef = {
-    val retValue = super.clone
-    retValue
+    super.clone
+
   }
 
   def isConnected(label: String): Boolean = {
     val step = this.getStep(label)
-    val retValue = step.isConnected
-    retValue
+    step.isConnected
   }
 
   def getSuccessorLabels(label: String): util.List[String] = {
-    val step: Step = getStep(label)
+    val step = getStep(label)
     var retValue: util.List[String] = new util.ArrayList[String]
     if (step.isLeaf) {
       retValue = new util.ArrayList[String](1)
