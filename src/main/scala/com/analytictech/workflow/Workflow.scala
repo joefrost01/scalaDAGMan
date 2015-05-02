@@ -3,7 +3,7 @@ package com.analytictech.workflow
 import java.io.Serializable
 import java.util
 
-import scala.collection.mutable.ListBuffer
+import scala.collection.mutable.{ArrayBuffer, ListBuffer}
 
 
 case class Workflow(name: String,
@@ -88,12 +88,12 @@ case class Workflow(name: String,
     v1.getChildren.contains(v2)
   }
 
-  def getChildLabels(label: String): util.List[String] = {
+  def getChildLabels(label: String): ArrayBuffer[String] = {
     val step = getStep(label)
     step.getChildLabels
   }
 
-  def getParentLabels(label: String): util.List[String] = {
+  def getParentLabels(label: String): ArrayBuffer[String] = {
     val step = getStep(label)
     step.getParentLabels
   }

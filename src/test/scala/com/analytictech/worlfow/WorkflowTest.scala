@@ -1,9 +1,10 @@
 package com.analytictech.worlfow
 
-import java.util
 
 import com.analytictech.workflow._
 import org.scalatest.{FlatSpec, _}
+
+import scala.collection.mutable.ArrayBuffer
 
 class WorkflowTest extends FlatSpec with Matchers {
 
@@ -24,15 +25,15 @@ class WorkflowTest extends FlatSpec with Matchers {
 
   it should "correctly report the children of a step" in {
     val workflow = new Workflow("test", false, 1, steps, connector1 :: Nil)
-    val list=new util.ArrayList[String](1)
-      list.add(step2.label)
+    val list = new ArrayBuffer[String](1)
+    list += step2.label
     workflow.getChildLabels(step1.label) should equal(list)
   }
 
   it should "correctly report the parent of a step" in {
     val workflow = new Workflow("test", false, 1, steps, connector1 :: Nil)
-    val list=new util.ArrayList[String](1)
-    list.add(step1.label)
+    val list = new ArrayBuffer[String](1)
+    list += step1.label
     workflow.getParentLabels(step2.label) should equal(list)
   }
 }

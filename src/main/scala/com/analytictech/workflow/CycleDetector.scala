@@ -61,7 +61,7 @@ object CycleDetector {
     nodeStateMap.put(node, VISITING)
     val i$ = node.getChildren.iterator
     while (i$.hasNext) {
-      val v: Step = i$.next
+      val v: Step = i$.next()
       if (isNotVisited(v, nodeStateMap)) {
         val hasCycle: Boolean = dfsVisit(v, cycle, nodeStateMap)
         if (hasCycle) {

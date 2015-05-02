@@ -37,7 +37,6 @@ object TopologicalSorter {
 
   private def dfsVisit(node: Step, nodeStateMap: util.Map[Step, Integer], list: util.List[String]) {
     nodeStateMap.put(node, VISITING)
-    import scala.collection.JavaConversions._
     for (v <- node.getChildren) {
       if (isNotVisited(v, nodeStateMap)) {
         dfsVisit(v, nodeStateMap, list)

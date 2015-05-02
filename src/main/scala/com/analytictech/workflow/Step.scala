@@ -1,57 +1,53 @@
 package com.analytictech.workflow
 
 import java.io.Serializable
-import java.util
-import scala.collection.JavaConversions._
+
+import scala.collection.mutable.ArrayBuffer
 
 
 case class Step(label: String, task: Task) extends Cloneable with Serializable {
 
-  private val children: util.List[Step] = new util.ArrayList[Step]
-  private val parents: util.List[Step] = new util.ArrayList[Step]
+  private val children = new ArrayBuffer[Step]
+  private val parents = new ArrayBuffer[Step]
 
 
   def addConnectorTo(step: Step) {
     if (!children.contains(step)) {
-      children.add(step)
+      children += step
     }
   }
 
   def removeConnectorTo(step: Step) {
-    children.remove(step)
+    children -= step
   }
 
   def addConnectorFrom(step: Step) {
-    if(!parents.contains(step)) {
-      parents.add(step)
+    if (!parents.contains(step)) {
+      parents += step
     }
   }
 
   def removeConnectorFrom(step: Step) {
-    parents.remove(step)
+    parents -= step
   }
 
-  //TODO convert to Scala List
-  def getChildren: util.List[Step] = {
+  def getChildren: ArrayBuffer[Step] = {
     children
   }
 
-  //TODO convert to Scala List
-  def getChildLabels: util.List[String] = {
-    val retValue = new util.ArrayList[String](children.size)
-    for (child <- children.toList) retValue.add(child.label)
+  def getChildLabels: ArrayBuffer[String] = {
+    val retValue = new ArrayBuffer[String](children.size)
+    for (child <- children.toList) retValue += child.label
     retValue
   }
 
-  //TODO convert to Scala List
-  def getParents: util.List[Step] = {
+  def getParents: ArrayBuffer[Step] = {
     parents
   }
 
-  //TODO convert to Scala List
-  def getParentLabels: util.List[String] = {
-    val retValue = new util.ArrayList[String](parents.size)
-    for (parent: Step <- parents.toList) retValue.add(parent.label)
+  def getParentLabels: ArrayBuffer[String] = {
+    val retValue = new ArrayBuffer[String](parents.size)
+    for (parent: Step <- parents.toList) retValue += parent.label
     retValue
   }
 
