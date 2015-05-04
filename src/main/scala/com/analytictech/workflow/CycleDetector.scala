@@ -28,10 +28,10 @@ object CycleDetector {
 
   def introducesCycle(node: Step, nodeStateMap: util.Map[Step, Integer]): util.List[String] = {
     val cycleStack = new util.LinkedList[String]
-    val hasCycle: Boolean = dfsVisit(node, cycleStack, nodeStateMap)
+    val hasCycle = dfsVisit(node, cycleStack, nodeStateMap)
     if (hasCycle) {
-      val label: String = cycleStack.getFirst
-      val pos: Int = cycleStack.lastIndexOf(label)
+      val label = cycleStack.getFirst
+      val pos = cycleStack.lastIndexOf(label)
       val cycle = cycleStack.subList(0, pos + 1)
       Collections.reverse(cycle)
       cycle
@@ -47,29 +47,26 @@ object CycleDetector {
   }
 
   private def isNotVisited(node: Step, nodeStateMap: util.Map[Step, Integer]): Boolean = {
-    val state: Integer = nodeStateMap.get(node)
+    val state = nodeStateMap.get(node)
     state == null || (NOT_VISITED == state)
   }
 
   private def isVisiting(node: Step, nodeStateMap: util.Map[Step, Integer]): Boolean = {
-    val state: Integer = nodeStateMap.get(node)
+    val state = nodeStateMap.get(node)
     VISITING == state
   }
 
   private def dfsVisit(node: Step, cycle: util.LinkedList[String], nodeStateMap: util.Map[Step, Integer]): Boolean = {
     cycle.addFirst(node.label)
     nodeStateMap.put(node, VISITING)
-    val i$ = node.getChildren.iterator
-    while (i$.hasNext) {
-      val v: Step = i$.next()
-      if (isNotVisited(v, nodeStateMap)) {
-        val hasCycle: Boolean = dfsVisit(v, cycle, nodeStateMap)
-        if (hasCycle) {
+    for (child <- node.getChildren) {
+      if (isNotVisited(child, nodeStateMap)) {
+        if (dfsVisit(child, cycle, nodeStateMap)) {
           return true
         }
       }
-      else if (isVisiting(v, nodeStateMap)) {
-        cycle.addFirst(v.label)
+      else if (isVisiting(child, nodeStateMap)) {
+        cycle.addFirst(child.label)
         return true
       }
     }

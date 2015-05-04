@@ -21,6 +21,13 @@
             <artifactId>sext</artifactId>
             <version>0.2.3</version>
         </dependency>
+        <dependency>
+            <groupId>com.typesafe.akka</groupId>
+            <artifactId>akka-actor_2.11</artifactId>
+            <version>2.3.10</version>
+        </dependency>
+
+
 
         <!-- testing -->
         <dependency>

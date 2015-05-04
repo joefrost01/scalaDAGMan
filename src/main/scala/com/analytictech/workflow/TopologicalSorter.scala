@@ -13,14 +13,14 @@ object TopologicalSorter {
   }
 
   def sort(node: Step): util.List[String] = {
-    val retValue: util.LinkedList[String] = new util.LinkedList[String]
+    val retValue = new util.LinkedList[String]
     dfsVisit(node, new util.HashMap[Step, Integer], retValue)
     retValue
   }
 
   private def dfs(graph: Workflow): util.List[String] = {
-    val retValue: util.LinkedList[String] = new util.LinkedList[String]
-    val nodeStateMap: util.HashMap[Step, Integer] = new util.HashMap[Step, Integer]
+    val retValue = new util.LinkedList[String]
+    val nodeStateMap = new util.HashMap[Step, Integer]
     for (o <- graph.getSteps) {
       val node: Step = o.asInstanceOf[Step]
       if (isNotVisited(node, nodeStateMap)) {
@@ -31,7 +31,7 @@ object TopologicalSorter {
   }
 
   private def isNotVisited(node: Step, nodeStateMap: util.Map[Step, Integer]): Boolean = {
-    val state: Integer = nodeStateMap.get(node)
+    val state = nodeStateMap.get(node)
     state == null || (NOT_VISTITED == state)
   }
 

@@ -1,0 +1,69 @@
+{
+  "name": "workflow2",
+  "resumable": true,
+  "priority": 1,
+  "steps": [
+    {
+      "label": "Init",
+      "task": {
+        "command": "command1",
+        "parameters": [
+          "param1",
+          "param2",
+          "param3"
+        ]
+      }
+    },
+    {
+      "label": "MarketDataCaching",
+      "task": {
+        "command": "command1",
+        "parameters": [
+          "param1",
+          "param2",
+          "param3"
+        ]
+      }
+    },
+    {
+      "label": "TradeCaching",
+      "task": {
+        "command": "command1",
+        "parameters": [
+          "param1",
+          "param2",
+          "param3"
+        ]
+      }
+    },
+    {
+      "label": "Calculation",
+      "task": {
+        "command": "command1",
+        "parameters": [
+          "param1",
+          "param2",
+          "param3"
+        ]
+      }
+    }
+  ],
+  "connectors": [
+    {
+      "from": "Init",
+      "to": "MarketDataCaching"
+    },
+    {
+      "from": "Init",
+      "to": "TradeCaching"
+    },
+    {
+      "from": "MarketDataCaching",
+      "to": "Calculation"
+    },
+    {
+      "from": "TradeCaching",
+      "to": "Calculation"
+    }
+  ]
+}
