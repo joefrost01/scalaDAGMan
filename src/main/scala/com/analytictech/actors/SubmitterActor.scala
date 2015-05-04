@@ -1,14 +1,36 @@
 package com.analytictech.actors
 
 import akka.actor.Actor
-import akka.actor.Actor.Receive
+import com.analytictech.workflow.Step
+import sext._
+
+import scala.async.Async.async
+import scala.concurrent.ExecutionContext.Implicits.global
 
 
 class SubmitterActor extends Actor with akka.actor.ActorLogging {
 
   log.info("submitter started")
 
-  override def receive: Receive = {
-    case _ => Unit
+  def name = this.getClass.getSimpleName
+
+  def classType = this.getClass
+
+  val workflowManager = context.parent
+
+  def receive: PartialFunction[Any, Unit] = {
+    case x: (Step, Int, String) =>
+      log.info("Priority: " + x._2 + ", " + x._1.treeString + " from workflow: " + x._3)
+      processTask(x._1, x._2, x._3)
+  }
+
+  def processTask(step: Step, priority: Int, workflow: String) = {
+    async {
+      Thread.sleep(1000)
+      log.info("completed work: " + step.label)
+      workflowManager !(workflow, step.label)
+    }
   }
 }
+
+

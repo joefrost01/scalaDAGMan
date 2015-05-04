@@ -8,8 +8,6 @@ class SupervisorActor extends Actor with akka.actor.ActorLogging {
 
   val workflowEngine = context.actorOf(Props[WorkflowEngineActor], name = "WorkflowEngineActor")
   context.watch(workflowEngine)
-  val submitter = context.actorOf(Props[SubmitterActor], name = "SubmitterActor")
-  context.watch(submitter)
   val stateManager = context.actorOf(Props[StateManagerActor], name = "StateManagerActor")
   context.watch(stateManager)
 

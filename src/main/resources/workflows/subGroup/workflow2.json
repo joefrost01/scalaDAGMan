@@ -1,12 +1,12 @@
 {
   "name": "workflow2",
   "resumable": true,
-  "priority": 1,
+  "priority": 3,
   "steps": [
     {
       "label": "Init",
       "task": {
-        "command": "command1",
+        "command": "command2",
         "parameters": [
           "param1",
           "param2",

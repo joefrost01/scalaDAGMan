@@ -30,6 +30,10 @@ case class Workflow(name: String,
     stepListInner
   }
 
+  def getRoots: ListBuffer[Step] = {
+    getSteps.filter(x => x.isRoot)
+  }
+
   def addStep(step: Step): Step = {
     var retValue: Step = null
     if (this.stepMap.containsKey(step.label)) {

@@ -6,7 +6,7 @@
     {
       "label": "Init",
       "task": {
-        "command": "command1",
+        "command": "init command",
         "parameters": [
           "param1",
           "param2",
