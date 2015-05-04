@@ -1,8 +1,14 @@
 package com.analytictech.actors
 
-/**
- * Created by JoeFrost on 04/05/15.
- */
-class SubmitterActor {
+import akka.actor.Actor
+import akka.actor.Actor.Receive
 
+
+class SubmitterActor extends Actor with akka.actor.ActorLogging {
+
+  log.info("submitter started")
+
+  override def receive: Receive = {
+    case _ => Unit
+  }
 }

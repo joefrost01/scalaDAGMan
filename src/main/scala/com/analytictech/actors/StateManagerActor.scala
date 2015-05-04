@@ -1,8 +1,13 @@
 package com.analytictech.actors
 
-/**
- * Created by JoeFrost on 04/05/15.
- */
-class   StateManagerActor {
+import akka.actor.Actor
 
+
+class   StateManagerActor extends Actor with akka.actor.ActorLogging {
+
+  log.info("state manager started")
+
+  override def receive: Receive = {
+    case _ => Unit
+  }
 }
