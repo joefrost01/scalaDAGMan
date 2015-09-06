@@ -27,7 +27,7 @@ class SubmitterActor extends Actor with akka.actor.ActorLogging {
   def processTask(step: Step, priority: Int, workflow: String) = {
     async {
       Thread.sleep(1000)
-      log.info("completed work: " + step.label)
+      log.info("completed step " + step.label + " from workflow "+workflow)
       workflowManager !(workflow, step.label)
     }
   }

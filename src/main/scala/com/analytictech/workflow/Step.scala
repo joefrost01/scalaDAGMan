@@ -9,6 +9,7 @@ case class Step(label: String, task: Task) extends Cloneable with Serializable {
 
   private val children = new ArrayBuffer[Step]
   private val parents = new ArrayBuffer[Step]
+  var completed = false
 
   def addConnectorTo(step: Step) {
     if (!children.contains(step)) {

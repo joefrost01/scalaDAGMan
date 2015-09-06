@@ -4,7 +4,7 @@ import java.io.File
 
 import akka.actor.{Actor, ActorSystem, Props}
 import akka.dispatch.{PriorityGenerator, UnboundedPriorityMailbox}
-import com.analytictech.workflow.{Task, WorkflowReader}
+import com.analytictech.workflow.{Step, Task, WorkflowReader}
 import com.typesafe.config.Config
 import sext._
 
@@ -12,9 +12,6 @@ import sext._
 class WorkflowEngineActor extends Actor with akka.actor.ActorLogging {
 
   log.info("workflow engine started")
-
-  //val reflections = new Reflections("com.analytictech.actors.submitters")
-  //val subTypes = reflections.getSubTypesOf(Class[SubmitterActor]).toArray
 
   val submitter = context.actorOf(Props[SubmitterActor].withDispatcher("prio-dispatcher"), name = "SubmitterActor")
   context.watch(submitter)
@@ -34,8 +31,15 @@ class WorkflowEngineActor extends Actor with akka.actor.ActorLogging {
 
   override def receive: PartialFunction[Any, Unit] = {
 
-    case x => log.info(x.treeString)
-      //workflows.get()
+    case x: (String, String) =>
+      val workflow=workflows.get(x._1).get
+      val step = workflow.getStep(x._2)
+      step.completed=true
+      for (child <- step.getChildren) {
+        if (!child.getParents.exists(p => !p.completed)) {
+          submitter !(child, workflow.priority, workflow.name)
+        }
+      }
   }
 }
 
